@@ -4,8 +4,9 @@ const path = require('path');
 const app = express();
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/ping', function (req, res) {
- return res.send('pong');
+// access service-worker
+app.get("/selfpush-sw.js", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public", "selfpush-sw.js"));
 });
 
 app.get('/', function (req, res) {
