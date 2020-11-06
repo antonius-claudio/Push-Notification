@@ -5,7 +5,7 @@ function App() {
 
   // urlB64ToUint8Array is a magic function that will encode the base64 public key
   // to Array buffer which is needed by the subscription option
-  urlB64ToUint8Array = base64String => {
+  const urlB64ToUint8Array = base64String => {
     const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
     const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
     const rawData = atob(base64);
@@ -17,7 +17,7 @@ function App() {
   };
 
   // saveSubscription saves the subscription to the backend
-  saveSubscription = async subscription => {
+  const saveSubscription = async subscription => {
     const SERVER_URL = 'https://nameless-dusk-24904.herokuapp.com/save-subscription'
     const response = await fetch(SERVER_URL, {
       method: 'post',
@@ -30,7 +30,7 @@ function App() {
     return result;
   };
 
-  checkNotif = () => {
+  const checkNotif = () => {
     console.log('masuk check notif home')
     if (!("Notification" in window)) {
       alert("This browser does not support desktop notification");
@@ -48,11 +48,11 @@ function App() {
         })
         .then(async (worker) => {
           const vapid = "BEQ0cl0DbrAbXmFCR3OYVMA_Wp-JP9kQLp6KaKjGDitUVdA7togwMntXLAVEMkAuNKsHGuISGn4Mpykxh32LiOA";
-          const applicationServerKey = this.urlB64ToUint8Array(vapid);
+          const applicationServerKey = urlB64ToUint8Array(vapid);
           const options = { applicationServerKey, userVisibleOnly: true };
           const subscription = await worker.pushManager.subscribe(options);
           console.log('data this to be for subcr', JSON.stringify(subscription))
-          const saveSub = await this.saveSubscription(subscription);
+          const saveSub = await saveSubscription(subscription);
           console.log('result from be', saveSub)
         })
         .catch((err) => {
@@ -64,7 +64,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <button onClick={this.checkNotif}>Notify Me</button>
+        <button onClick={checkNotif}>Notify Me</button>
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
