@@ -227,6 +227,13 @@ clients.openWindow(linkNotif)
 }); 
 ```
 
+### Step 6 : Mengaktifkan New Service Worker (update sw)
+- Pada serviceworker.js tambahkan function untuk mengaktifkan service worker yang baru apabila terjadi perubahan.
+```
+self.addEventListener('install', event => {
+  self.skipWaiting();
+});
+```
 
 ## BACK END
 ---
