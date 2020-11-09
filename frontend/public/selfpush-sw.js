@@ -15,6 +15,11 @@ const showLocalNotification = (data, swRegistration) => {
   swRegistration.showNotification(title, options);
 };
 
+// update new sw
+self.addEventListener('install', event => {
+  self.skipWaiting();
+});
+
 self.addEventListener('push', function(event) {
   if (event.data) {
     showLocalNotification(event.data.json(), self.registration);
